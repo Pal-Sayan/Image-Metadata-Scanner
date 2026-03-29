@@ -1379,7 +1379,7 @@ def print_banner():
 ║                                                                              ║
 ║  Extract metadata from Images, Documents, PDFs, Audio, Video, PE & more      ║
 ║  New: ExifTool Integration | Parallel Scanning | Forensic Logging            ║
-║  Author : Sayan Pal. | Collaborator: Soumit Santra.                          ║
+║  Author : Sayan Pal | Collaborator: Soumit Santra                            ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
     {Style.RESET_ALL}""")
 
