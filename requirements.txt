@@ -1,2 +1,35 @@
+# Core image processing
 Pillow
-exifread
+
+# PDF processing
+PyPDF2
+
+# Word document processing
+python-docx
+
+# Audio metadata extraction
+mutagen
+
+# File type detection (libmagic wrapper)
+# On Windows, install: pip install python-magic-bin
+# On Linux/Mac, install: pip install python-magic
+python-magic-bin; sys_platform == 'win32'
+python-magic; sys_platform != 'win32'
+
+# PE (Windows executable) file analysis
+pefile
+
+# Terminal styling and progress
+colorama
+tqdm
+
+# Deep file metadata extraction (Fallback/Complementary)
+hachoir
+
+# Optional: For video metadata (requires ffmpeg/ffprobe to be installed separately)
+# ffmpeg-python
+
+#Advanced Forensics (Linux recommended)s
+pytsk3
+# pyewf
+# pyaff4-snappy
