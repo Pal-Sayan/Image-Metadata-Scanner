@@ -3,6 +3,9 @@ Enhanced Metadata Extractor for Ethical Hacking
 A comprehensive tool for extracting metadata from various file types
 Useful for digital forensics, OSINT, and security assessments
 
+Author: Sayan Pal
+Collaborator: Soumit Santra
+
 New Features:
 - ExifTool integration for comprehensive metadata extraction
 - libmagic for accurate file type detection
@@ -1376,7 +1379,7 @@ def print_banner():
 ║                                                                              ║
 ║  Extract metadata from Images, Documents, PDFs, Audio, Video, PE & more      ║
 ║  New: ExifTool Integration | Parallel Scanning | Forensic Logging            ║
-║                                                                              ║
+║  Author : Sayan Pal | Collaborator: Soumit Santra                            ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
     {Style.RESET_ALL}""")
 
