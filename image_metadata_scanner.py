@@ -1,5 +1,5 @@
 """
-Enhanced Metadata Extractor for Ethical Hacking
+Enhanced Metadata Extractor
 A comprehensive tool for extracting metadata from various file types
 Useful for digital forensics, OSINT, and security assessments
 
@@ -48,8 +48,9 @@ except ImportError:
     def init(): pass
     def tqdm(iterable=None, **kwargs): return iterable
 
-# Initialize colorama
-init(autoreset=True)
+# Initialize colorama if available
+if COLORAMA_AVAILABLE:
+    init(autoreset=True)
 
 try:
 
@@ -1373,7 +1374,7 @@ def print_banner():
     print(f"""{Fore.CYAN}
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                                                                              ║
-║{Fore.YELLOW}ENHANCED METADATA EXTRACTOR FOR ETHICAL HACKING v{VERSION}{Fore.CYAN}           ║
+║{Fore.YELLOW}ENHANCED METADATA EXTRACTOR FOR  v{VERSION}{Fore.CYAN}              ║
 ║                                                                              ║
 ║  Extract metadata from Images, Documents, PDFs, Audio, Video, PE & more      ║
 ║  New: ExifTool Integration | Parallel Scanning | Forensic Logging            ║
