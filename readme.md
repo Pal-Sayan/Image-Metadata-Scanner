@@ -1,13 +1,13 @@
 <div align="center">
 
-# 🕵️ Enhanced Metadata Extractor
+# 🕵️ ForensiScan
 
-**A comprehensive metadata extraction tool for digital forensics, OSINT, and security assessments.**
+**Advanced File Intelligence & Forensic Analysis Tool**
 
 [![Author](https://img.shields.io/badge/Author-Sayan%20Pal-blue?style=flat-square&logo=github)](https://github.com/Pal-Sayan)
 [![Collaborator](https://img.shields.io/badge/Collaborator-Soumit%20Santra-blue?style=flat-square&logo=github)](https://github.com/Soumit-Santra)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-[![Version](https://img.shields.io/badge/Version-3.0.0-22c55e?style=flat-square)]()
+[![Version](https://img.shields.io/badge/Version-6.0.0-22c55e?style=flat-square)]()
 [![License](https://img.shields.io/badge/License-MIT-f97316?style=flat-square)](LICENSE)
 
 </div>
@@ -16,29 +16,53 @@
 
 ## 📖 Overview
 
-**Enhanced Metadata Extractor** is a powerful command-line and interactive tool that extracts every layer of metadata from a wide range of file types. It is designed for digital forensics investigators, OSINT analysts, and security professionals who need deep, reliable, and auditable metadata extraction.
+**ForensiScan v6** is a comprehensive digital forensics and file intelligence platform for investigators, OSINT analysts, and security professionals. It combines deep metadata extraction, malware threat scoring, YARA scanning, timeline reconstruction, and a full-featured GUI — all while operating with **streaming memory efficiency** so even multi-gigabyte files never blow your RAM.
 
-It supports **ExifTool integration**, **parallel directory scanning**, **forensic case tracking**, **anomaly/steganography detection**, and output in JSON, HTML, and CSV formats.
+v6 ships two interfaces from the same script:
+
+- **CLI** — interactive menu or fully scriptable argument mode
+- **GUI** — a themed Tkinter dashboard with seven tabs, animated gauges, a timeline graph, a multi-file risk table, and live search/filter
 
 ---
 
-## ✨ Features
+## ✨ What's New in v6
+
+| Area | Change |
+|---|---|
+| **Streaming memory** | Entropy computed in O(256 bytes) RAM; hashes in a single streaming pass; YARA scans via `mmap` (zero-copy); pattern search uses a sliding window so matches across chunk boundaries are never missed |
+| **YARA threat engine** | Built-in ruleset covers EICAR, UPX packing, PowerShell download cradles, PHP webshells, Base64-encoded PE, reverse shells, and crypto-miners; pluggable via `yara-python` |
+| **Threat Intelligence module** | Risk score 0–100, five severity bands (CLEAN / LOW / MEDIUM / HIGH / CRITICAL), IOC list, packer detection, PE timestamp anomaly checks, known-malicious hash lookup |
+| **Chain of Custody** | Cryptographically chained audit log (SHA-256 linked entries), integrity verification, JSON persistence, GUI tab |
+| **Timeline Reconstructor** | Merges filesystem MAC times, EXIF dates, document properties, PE compile timestamps, ExifTool fields into a single sorted timeline |
+| **GUI — Timeline Graph tab** | Canvas-based lane diagram; density heat-band; zoom slider (0.3×–5×); hover tooltips; click-to-detail side panel |
+| **GUI — Multi-File Risk Dashboard** | Sortable table for batch directory scans; live search, risk-level filter, file-type filter; per-row colour coding; quick-detail pane; click bubbles to single-file tabs |
+| **GUI — Risk Heatmap tab** | Animated bar chart of score contributors; 15-cell indicator matrix; risk-reason log |
+| **5 GUI themes** | Cyber Dark · Arctic · Obsidian · Matrix · Rose Gold — live-switchable via theme picker |
+| **Disk image support** | E01 / EWF, DD/raw, ISO via `pytsk3` + `pyewf`; partition listing, filesystem walk, sample file roster |
+
+---
+
+## ✨ Full Feature Set
 
 | Feature | Details |
 |---|---|
-| 🔬 **ExifTool Integration** | 10x more metadata via ExifTool; falls back to Python stack gracefully |
-| 🧲 **libmagic File Detection** | Accurate MIME type and true format detection, independent of file extension |
-| 📷 **Image EXIF + GPS** | Camera make/model, lens, aperture, ISO, shutter speed, focal length, GPS coordinates + Google Maps link |
-| 📄 **Document Metadata** | PDF author, creation date, encryption status; DOCX author, revision history, keywords |
-| 🎵 **Audio / Video** | ID3 tags, bitrate, sample rate, duration; video streams via ffprobe |
-| 📦 **Archive Analysis** | ZIP/JAR/APK file listings, compression ratios, CRC checksums |
-| ⚙️ **PE Executable** | PE headers, imported DLLs, sections, version info for `.exe` / `.dll` |
-| 💽 **Forensic Disk Images** | E01, DD/Raw, and AFF4 support via pytsk3/pyewf — partition listing and filesystem walk |
-| 🔐 **File Hashes** | MD5, SHA1, SHA256 for every file |
-| ⚠️ **Anomaly Detection** | Shannon entropy analysis, JPEG/PNG trailing data detection (steganography flags) |
-| 🗂️ **Forensic Case Tracking** | Case IDs, examiner system info, UTC timestamps, structured JSON logs |
-| ⚡ **Parallel Scanning** | Multi-threaded directory scanning with configurable worker count and progress bar |
-| 📊 **Multiple Output Formats** | JSON (structured), HTML (visual report), CSV (spreadsheet) |
+| 🔬 **ExifTool integration** | Subprocess wrapper; 10× more metadata fields; graceful fallback |
+| 🧲 **libmagic file detection** | True MIME type and format detection independent of file extension |
+| 📷 **Image EXIF + GPS** | Camera make/model, lens, aperture, ISO, shutter, focal length, GPS coords + Google Maps URL |
+| 📄 **Document metadata** | PDF author/dates/encryption; DOCX author/revision/last-modified-by |
+| 🎵 **Audio / video** | ID3 tags, bitrate, sample rate, duration; video streams via ffprobe |
+| 📦 **Archive analysis** | ZIP / JAR / APK file listings, compression ratios, CRC checksums |
+| ⚙️ **PE executable** | PE headers, imported DLLs, section table, compile timestamp |
+| 💽 **Disk images** | E01, DD/Raw, ISO, AFF4 — partition table, filesystem walk |
+| 🔐 **File hashes** | MD5, SHA-1, SHA-256 — all in a single streaming pass |
+| 📡 **YARA scanning** | mmap-based zero-copy scan; 7 built-in rules; 256 MB file cap |
+| ⚠️ **Anomaly detection** | Shannon entropy (O(256 B) RAM), JPEG/PNG trailing-data steganography flags |
+| 🧮 **Threat scoring** | 0–100 composite score; packer signatures, suspicious pattern search, known-hash lookup |
+| 🗃️ **Chain of Custody** | SHA-256 chained entries, per-event integrity verification, JSON export |
+| 🕒 **Timeline reconstruction** | Merged & sorted events from filesystem, EXIF, documents, PE, ExifTool |
+| ⚡ **Parallel scanning** | `ThreadPoolExecutor`-backed directory scanner; configurable worker count; tqdm progress bar |
+| 📊 **Output formats** | JSON (full), HTML (visual report), CSV (spreadsheet-ready) |
+| 🖥️ **GUI** | Seven-tab Tkinter dashboard; animated gauge; 5 themes; live search/filter; export buttons |
 
 ---
 
@@ -47,8 +71,8 @@ It supports **ExifTool integration**, **parallel directory scanning**, **forensi
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/Pal-Sayan/enhanced-metadata-extractor.git
-cd enhanced-metadata-extractor
+git clone https://github.com/Pal-Sayan/forensiscan.git
+cd forensiscan
 ```
 
 ### 2. Install Python dependencies
@@ -59,45 +83,63 @@ pip install -r requirements.txt
 
 ### 3. (Recommended) Install ExifTool
 
-ExifTool dramatically increases metadata coverage. Download from [https://exiftool.org](https://exiftool.org) and ensure it is available in your system `PATH`.
+ExifTool dramatically increases metadata coverage.
+
+```bash
+# Debian / Ubuntu
+sudo apt install libimage-exiftool-perl
+
+# macOS
+brew install exiftool
+
+# Windows — download exiftool.exe from https://exiftool.org and place in PATH
+```
 
 ### 4. Run
 
 ```bash
-# Interactive menu mode
-python main_enhanced.py
+# Startup prompt — choose CLI or GUI
+python forensiscan.py
 
-# Single file (command-line)
-python main_enhanced.py photo.jpg -v
+# Single file (CLI, skip prompt)
+python forensiscan.py photo.jpg -v
 
 # Directory scan
-python main_enhanced.py -d /path/to/folder -r --workers 8
+python forensiscan.py -d /path/to/evidence -r --workers 8 -o report.html
 ```
 
 ---
 
 ## 💻 Usage
 
-### Interactive Mode
+### Startup Prompt
 
-Running without arguments launches a full interactive menu:
+Running without arguments shows a mode selector:
 
-```bash
-python main_enhanced.py
+```
+[1]  CLI  – Terminal / interactive menu
+[2]  GUI  – Graphical dashboard with all v6 features
 ```
 
-Menu options include:
-- Extract metadata from a single file
-- Scan a directory (non-recursive or recursive)
-- Forensic mode with case ID and log file
-- Disk image analysis (E01, DD, AFF4)
-- System capability checker
-- Supported file types reference
+### Interactive CLI Menu
+
+```
+1. Extract metadata – single file
+2. Process directory (non-recursive)
+3. Process directory (recursive)
+4. Forensic mode – single file + case tracking + CoC
+5. Forensic mode – directory scan
+6. Analyse disk image (E01 / DD / AFF4)
+7. System capabilities
+8. Supported file types
+9. About
+0. Exit
+```
 
 ### Command-Line Mode
 
 ```bash
-python main_enhanced.py <input> [options]
+python forensiscan.py <input> [options]
 ```
 
 | Option | Description |
@@ -107,67 +149,82 @@ python main_enhanced.py <input> [options]
 | `-f`, `--format` | Explicitly set output format |
 | `-d`, `--directory` | Treat input as a directory |
 | `-r`, `--recursive` | Recurse into subdirectories |
-| `-v`, `--verbose` | Include full ExifTool output |
-| `--workers N` | Number of parallel threads (default: 4) |
+| `-v`, `--verbose` | Include full ExifTool output in console |
+| `--workers N` | Parallel threads for directory scan (default: 4) |
 | `--case-id ID` | Assign a forensic case ID |
-| `--log FILE` | Write structured log to file |
+| `--examiner NAME` | Record examiner name in CoC log |
+| `--log FILE` | Write structured JSON log to file |
+| `--coc FILE` | Persist Chain of Custody to file |
 
 ### Examples
 
 ```bash
-# Single file, verbose output
-python main_enhanced.py image.jpg -v
+# Single file, verbose
+python forensiscan.py image.jpg -v
 
-# Parallel recursive directory scan, save as HTML report
-python main_enhanced.py -d ./evidence -r --workers 8 -o report.html
+# Recursive directory scan → HTML report
+python forensiscan.py -d ./evidence -r --workers 8 -o report.html
 
-# Forensic mode with case tracking and JSON output
-python main_enhanced.py evidence.pdf --case-id CASE-2024-001 --log case.log -o output.json
+# Forensic mode with case ID and CoC file
+python forensiscan.py evidence.pdf \
+    --case-id CASE-2024-001 \
+    --examiner "Jane Smith" \
+    --log case.log \
+    --coc custody.json \
+    -o output.json
 
-# Save CSV for spreadsheet analysis
-python main_enhanced.py -d ./samples -o results.csv
+# CSV for bulk spreadsheet analysis
+python forensiscan.py -d ./samples -r -o results.csv
 ```
 
 ---
 
-## 📋 Sample Output
+## 🖥️ GUI Tabs
+
+| Tab | Description |
+|---|---|
+| **Dashboard** | Six metric cards, animated risk gauge (0–100), file info pane, IOC list |
+| **Timeline Graph** | Canvas lane diagram — one lane per category, density heat-band, zoom 0.3×–5×, hover tooltips, click-to-detail |
+| **Multi-File Risk** | Sortable table for batch scans; live search, risk-level filter, file-type filter; click row → populates other tabs |
+| **Risk Heatmap** | Animated contributor bar chart, 15-cell boolean indicator matrix, risk-reason log |
+| **YARA** | Rule-match table sorted by severity; click row → offset/string detail |
+| **Chain of Custody** | Canvas audit trail with linked-hash display; integrity badge |
+| **Raw JSON** | Full scrollable JSON output for the current file |
+
+---
+
+## 📋 Sample Console Output
 
 ```
 ════════════════════════════════════════════════════════════
-  FORENSIC INFORMATION
+  FORENSISCAN v6.0.0 — EXTRACTION REPORT
 ════════════════════════════════════════════════════════════
-  Case ID        CASE-2024-001
-  Tool           Enhanced Metadata Extractor v3.0.0
-  Extraction UTC 2024-08-15T10:23:44Z
-  Examiner OS    Linux 6.5.0
 
-════════════════════════════════════════════════════════════
-  FILE INFORMATION
-════════════════════════════════════════════════════════════
-  Filename       DSC_0042.jpg
-  File Size      4.2 MB
-  MD5            a1b2c3d4e5f6...
-  SHA256         9f8e7d6c5b4a...
-  MIME Type      image/jpeg
-  Entropy        7.21
+[FILE INFORMATION]
+  Filename       : DSC_0042.jpg
+  File Size      : 4.21 MB
+  Extension      : .jpg
+  Created Time   : 2024-03-15T08:22:11
+  Modified Time  : 2024-03-15T08:22:11
+  Permissions    : 644
 
-════════════════════════════════════════════════════════════
-  EXIF DATA  (camera / capture)
-════════════════════════════════════════════════════════════
-  Make           NIKON CORPORATION
-  Model          NIKON D750
-  LensModel      24-70mm f/2.8
-  ExposureTime   1/500
-  FNumber        2.8
-  ISO            400
-  FocalLength    50.0 mm
+[HASHES]
+  MD5    : a1b2c3d4e5f67890...
+  SHA1   : 1a2b3c4d5e6f7890...
+  SHA256 : 9f8e7d6c5b4a3b2c...
 
+[THREAT INTELLIGENCE]
+  Risk:   5/100  [██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░]  LOW
+  ⚑  GPS coordinates found – location privacy leak
+
+[TIMELINE — 5 events]
+  2024-03-15T08:22:11  [filesystem  ]  Filesystem          File created
+  2024-03-15T08:22:11  [exif        ]  EXIF                Photo taken
+  ...
+
+[CHAIN OF CUSTODY]
+  Record: <uuid>  |  Events: 4  |  Integrity: ✓ INTACT
 ════════════════════════════════════════════════════════════
-  GPS / LOCATION
-════════════════════════════════════════════════════════════
-  Latitude       40.7128
-  Longitude      -74.006
-  Google Maps    https://maps.google.com/?q=40.7128,-74.006
 ```
 
 ---
@@ -179,14 +236,15 @@ python main_enhanced.py -d ./samples -o results.csv
 | Package | Version | Purpose |
 |---|---|---|
 | [Pillow](https://python-pillow.org/) | `>= 10.0.0` | Image reading, EXIF, GPS |
-| [hachoir](https://hachoir.readthedocs.io/) | `>= 3.0.0` | Robust fallback metadata parser |
-| [PyPDF2](https://pypdf2.readthedocs.io/) | `>= 3.0.0` | PDF metadata |
-| [python-docx](https://python-docx.readthedocs.io/) | `>= 0.8.11` | DOCX metadata |
-| [mutagen](https://mutagen.readthedocs.io/) | `>= 1.46` | Audio/video tags |
+| [hachoir](https://hachoir.readthedocs.io/) | `>= 3.0.0` | Deep fallback metadata parser |
+| [PyPDF2](https://pypdf2.readthedocs.io/) | `>= 3.0.0` | PDF metadata extraction |
+| [python-docx](https://python-docx.readthedocs.io/) | `>= 0.8.11` | DOCX core properties |
+| [mutagen](https://mutagen.readthedocs.io/) | `>= 1.46.0` | Audio tag extraction |
 | [pefile](https://github.com/erocarrera/pefile) | `>= 2023.2.7` | PE executable analysis |
-| [python-magic](https://github.com/ahupp/python-magic) | `>= 0.4.27` | MIME/file type detection |
+| [python-magic](https://github.com/ahupp/python-magic) | `>= 0.4.27` | MIME / file-type detection |
+| [yara-python](https://yara.readthedocs.io/) | `>= 4.3.0` | YARA malware rule scanning *(v6 NEW)* |
 | [colorama](https://github.com/tartley/colorama) | `>= 0.4.6` | Coloured terminal output |
-| [tqdm](https://tqdm.github.io/) | `>= 4.66` | Progress bars |
+| [tqdm](https://tqdm.github.io/) | `>= 4.66.0` | Directory-scan progress bars |
 
 Install all at once:
 
@@ -194,13 +252,20 @@ Install all at once:
 pip install -r requirements.txt
 ```
 
-### Optional External Tools
+### Optional / Advanced
+
+| Package | Purpose | Install |
+|---|---|---|
+| `pytsk3` | Disk image filesystem walk | `pip install pytsk3` |
+| `pyewf` | E01 / EWF image support | `pip install pyewf` |
+| `tkinter` | GUI (stdlib on Windows/macOS) | `sudo apt install python3-tk` |
+
+### External Binaries
 
 | Tool | Purpose | Install |
 |---|---|---|
-| [ExifTool](https://exiftool.org/) | Deep metadata extraction (highly recommended) | [exiftool.org](https://exiftool.org) |
-| [ffprobe](https://ffmpeg.org/) | Video stream metadata | [ffmpeg.org](https://ffmpeg.org) |
-| pytsk3 + pyewf | Forensic disk image support | `pip install pytsk3 pyewf` |
+| [ExifTool](https://exiftool.org/) | Deep metadata (highly recommended) | `apt install libimage-exiftool-perl` / `brew install exiftool` |
+| [ffprobe](https://ffmpeg.org/) | Video stream metadata | `apt install ffmpeg` / `brew install ffmpeg` |
 
 ---
 
@@ -208,62 +273,99 @@ pip install -r requirements.txt
 
 | Category | Formats | Extracted Data |
 |---|---|---|
-| **Images** | `.jpg`, `.jpeg`, `.png`, `.gif`, `.bmp`, `.tiff`, `.webp`, `.heic` | EXIF, GPS, camera info, dimensions |
-| **RAW Photos** | `.cr2`, `.nef`, `.arw`, `.dng`, `.orf` | Full EXIF via ExifTool/exifread |
-| **Documents** | `.pdf`, `.docx` | Author, dates, revision history, encryption status |
-| **Audio** | `.mp3`, `.flac`, `.m4a`, `.ogg`, `.wav` | ID3 tags, bitrate, sample rate, duration |
+| **Images** | `.jpg`, `.jpeg`, `.png`, `.gif`, `.bmp`, `.tiff`, `.webp`, `.heic` | EXIF, GPS, camera info, dimensions, steganography flags |
+| **Documents** | `.pdf`, `.docx` | Author, dates, revision, encryption status |
+| **Audio** | `.mp3`, `.flac`, `.m4a`, `.ogg`, `.wav` | ID3/Vorbis tags, bitrate, sample rate, duration |
 | **Video** | `.mp4`, `.avi`, `.mkv`, `.mov`, `.wmv` | Codec, resolution, bitrate, streams (requires ffprobe) |
-| **Archives** | `.zip`, `.jar`, `.apk` | File list, compression ratios, CRC checksums |
-| **Executables** | `.exe`, `.dll` | PE headers, imports, sections, version info |
+| **Archives** | `.zip`, `.jar`, `.apk` | File listing, compression ratios, CRC checksums |
+| **Executables** | `.exe`, `.dll` | PE headers, imports, sections, compile timestamp |
 | **Disk Images** | `.e01`, `.dd`, `.img`, `.iso`, `.aff4` | Partition table, filesystem walk, file timestamps |
-| **Any / Unknown** | `*` | File hashes, MIME type, entropy, timestamps |
+| **Any / Unknown** | `*` | MD5/SHA1/SHA256, MIME type, entropy, timestamps, YARA scan |
 
 ---
 
-## 🔬 Forensic Features
+## 🔬 Forensic Deep-Dive
 
-### Case Tracking
-Every extraction can be tagged with a **case ID** and logged to a structured JSON log file, recording:
-- Examiner system info (OS, Python version, machine)
-- Tool name and version
-- UTC and local extraction timestamps
-- Available library capabilities
+### Streaming Memory Architecture
 
-### Anomaly & Steganography Detection
-The tool automatically flags:
-- **High Shannon entropy** on non-compressed file types — possible encryption or packing
-- **JPEG trailing data** after the `FFD9` End-of-Image marker (>4KB, non-padding)
-- **PNG trailing data** after the `IEND` chunk (>4KB, non-padding)
+ForensiScan v6 never loads an entire file into RAM for core operations:
 
-### Parallel Directory Scanning
-Use `--workers N` to scan large evidence directories efficiently using multi-threading, with a live progress bar and per-file error tracking.
+- **Hashing** — single streaming pass updating MD5, SHA-1, SHA-256 simultaneously
+- **Entropy** — only a 256-element frequency table is kept; RAM usage is O(1)
+- **YARA** — files above 4 MB are scanned via `mmap` (zero-copy); hard cap at 256 MB
+- **Pattern search** — sliding-window across 64 KB chunks; cross-boundary matches always caught
+- **Steganography check** — only the last 8–16 KB of the file is read via `seek(-n, 2)`
+
+### Threat Intelligence & Scoring
+
+Risk score is a 0–100 composite built from:
+
+| Contributor | Max bump |
+|---|---|
+| Known-malicious hash match | +100 |
+| YARA critical rule | +60 |
+| YARA high rule | +40 |
+| YARA medium rule | +25 |
+| Packer/protector detected | +30 |
+| Very high entropy (non-compressed) | +30 |
+| Suspicious byte patterns | +20 |
+| PE timestamp anomaly | +20–35 |
+| Suspicious filesystem flags | +25 |
+| GPS data present | +5 |
+
+### Built-in YARA Rules
+
+| Rule | Severity |
+|---|---|
+| `Detect_EICAR` | LOW |
+| `Detect_UPX_Packed` | MEDIUM |
+| `Detect_Crypto_Mining` | MEDIUM |
+| `Detect_PowerShell_Download` | HIGH |
+| `Detect_Base64_PE` | HIGH |
+| `Detect_PHP_Webshell` | CRITICAL |
+| `Detect_Reverse_Shell` | CRITICAL |
+
+### Chain of Custody
+
+Each CoC record is a SHA-256 chained event log. Every entry hashes itself together with the previous entry's hash, making tampering detectable even after the fact. The GUI displays each event in a visual audit trail with hash prefixes and an integrity badge.
+
+### Timeline Reconstruction
+
+Sources merged into a single chronological event list:
+
+- Filesystem: created, modified, accessed (MAC times)
+- EXIF: DateTimeOriginal, DateTime
+- DOCX: core properties created/modified
+- PDF: CreationDate, ModDate
+- PE: FILE_HEADER.TimeDateStamp
+- ExifTool: FileModifyDate
 
 ---
 
 ## 🧩 Project Structure
 
 ```
-enhanced-metadata-extractor/
-├── main_enhanced.py         # Main script (all logic)
-├── requirements.txt         # Python dependencies
-└── README.md                # This file
+forensiscan/
+├── forensiscan.py       # All-in-one script (CLI + GUI)
+├── requirements.txt     # Python dependencies
+└── README.md            # This file
 ```
 
 ---
 
 ## ⚠️ Ethical Use
 
-This tool is intended for **legal and authorized use only**:
+This tool is intended for **legal and authorised use only**:
 
-- Only analyze files and systems you have explicit permission to examine
-- Respect applicable privacy laws and data protection regulations
-- Do not use for unauthorized surveillance, data theft, or malicious purposes
+- Analyse only files and systems you have explicit permission to examine
+- Respect applicable privacy laws and data-protection regulations
+- Do not use for unauthorised surveillance, data theft, or malicious purposes
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! To get started:
+Contributions are welcome!
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/my-feature`
