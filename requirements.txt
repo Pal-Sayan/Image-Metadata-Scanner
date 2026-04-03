@@ -1,35 +1,71 @@
-# Core image processing
+# ─────────────────────────────────────────────────────────────────
+#  ForensiScan v6.0.0 — Requirements
+#  Author: Sayan Pal  |  Collaborator: Soumit Santra
+# ─────────────────────────────────────────────────────────────────
+
+# Core image processing (EXIF, GPS, PIL) 
 Pillow
 
-# PDF processing
+# PDF processing 
 PyPDF2
 
-# Word document processing
+#  Word document processing (metadata + text extraction) 
 python-docx
 
-# Audio metadata extraction
+# Audio / video tag extraction 
 mutagen
 
-# File type detection (libmagic wrapper)
-# On Windows, install: pip install python-magic-bin
-# On Linux/Mac, install: pip install python-magic
+#  File type / MIME detection (libmagic wrapper) 
+# Windows:
 python-magic-bin; sys_platform == 'win32'
+# Linux / macOS (requires system libmagic: sudo apt install libmagic1):
 python-magic; sys_platform != 'win32'
 
-# PE (Windows executable) file analysis
+#  PE (Windows executable) analysis 
 pefile
 
-# Terminal styling and progress
+# Terminal styling & progress bars 
 colorama
 tqdm
 
-# Deep file metadata extraction (Fallback/Complementary)
+#  Deep / fallback metadata parser
 hachoir
 
-# Optional: For video metadata (requires ffmpeg/ffprobe to be installed separately)
+#  YARA malware rule scanning 
+# Enables built-in ruleset: EICAR, UPX, PowerShell cradles,
+# PHP webshells, Base64 PE, reverse shells, crypto-miners.
+yara-python
+
+#  Streaming / mmap helpers (stdlib — no install needed)
+# mmap, hashlib, math, io  →  all part of Python standard library
+
+#  GUI (stdlib — no install needed)
+# tkinter  →  bundled with Python on Windows/macOS
+# On Debian/Ubuntu: sudo apt install python3-tk
+
+# ─────────────────────────────────────────────────────────────────
+#  OPTIONAL — install only what you need
+# ─────────────────────────────────────────────────────────────────
+
+# Video stream metadata (requires ffprobe/ffmpeg binary in PATH)
 # ffmpeg-python
 
-#Advanced Forensics (Linux recommended)s
-pytsk3
-# pyewf
-# pyaff4-snappy
+# Forensic disk image support — partition listing & filesystem walk
+# Linux recommended (pytsk3 build may fail on Windows)
+# pytsk3
+# pyewf        # E01/EWF image support (requires libewf)
+# pyaff4-snappy  # AFF4 image support
+
+# ─────────────────────────────────────────────────────────────────
+#  EXTERNAL BINARY TOOLS (not pip — install separately)
+# ─────────────────────────────────────────────────────────────────
+#
+#  ExifTool  →  https://exiftool.org   (highly recommended)
+#    Windows : download exiftool.exe, place in PATH
+#    Linux   : sudo apt install libimage-exiftool-perl
+#    macOS   : brew install exiftool
+#
+#  ffprobe   →  https://ffmpeg.org    (required for video metadata)
+#    Linux   : sudo apt install ffmpeg
+#    macOS   : brew install ffmpeg
+#    Windows : download from ffmpeg.org, add to PATH
